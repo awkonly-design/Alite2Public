@@ -338,7 +338,8 @@ export class Renderer {
       }
       case 'DROPDOWN': {
         const opts = unescapeText(p.str(node, 'Options', 'Option 1\nOption 2\nOption 3')).split('\n');
-        const txt = p.bool(node, 'Show_selected', true) ? opts[0] : (p.str(node, 'Base_text') || opts[0]);
+        const sel = Math.max(0, Math.min(p.int(node, 'Selected', 0), opts.length - 1));
+        const txt = p.bool(node, 'Show_selected', true) ? opts[sel] : (p.str(node, 'Base_text') || opts[sel]);
         el.style.display = 'flex'; el.style.alignItems = 'center'; el.style.whiteSpace = 'pre';
         const sp = this.textSpan(el, txt); sp.style.flex = '1'; sp.style.overflow = 'hidden';
         const a = this.textSpan(el, SYM.down, 'lv-sym'); a.style.marginLeft = '8px'; a.style.fontSize = '0.8em';

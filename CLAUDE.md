@@ -30,6 +30,8 @@ ESP32-S3 Arduino firmware (arduino-esp32 3.0.2, LVGL 8.3.11) for a battery LED l
   - `multi_language.c` English → Korean/Japanese strings (keyed by English text)
   - `ui.c`, `ui.h`, `ui_*Screen*.c/.h`, `ui_img_*.c`, `ui_helpers.*`, `ui_events.h` — **generated**, never edit by hand
 - `ui_studio/` — browser UI editor + MCP server (`alite2-ui`). Project: `ui_studio/project/alite2_ui.json` + `assets/*.png`.
+  `ui_studio/js/simulator.js` (▶ Play) ports the key handling of `ui_ScreenState.ino`, the callbacks of `ui_ScreenEvent.ino`,
+  the defaults of `parameters.ino` and the effects to JavaScript: when you change those in the firmware, update it too.
 - `scripts/` — `setup.sh`, `build.sh`, `upload.sh [port]`, `upload_ota.sh <ip> <ota-password>`, `build_font.sh`, `clean.sh`.
 
 ## Rules

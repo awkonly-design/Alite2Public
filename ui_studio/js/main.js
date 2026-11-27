@@ -11,6 +11,7 @@ import { Hierarchy, ScreensPanel, ConsolePanel, HistoryPanel, TYPE_LABEL } from 
 import { InfoPanel } from './info.js';
 import { BuildDialog, MIN_LIGHT_FW } from './build.js';
 import { WifiDialog } from './wifi.js';
+import { Simulator } from './simulator.js';
 import { PALETTE, PALETTE_NAMES } from './render.js';
 import { h, icon, wicon } from './icons.js';
 import { Bridge } from './bridge.js';
@@ -49,6 +50,7 @@ class App {
     this.info = new InfoPanel(this);
     this.buildDialog = new BuildDialog(this);
     this.wifiDialog = new WifiDialog(this);
+    this.simulator = new Simulator(this);
     this.bridge = new Bridge(this);
 
     this.buildToolbar();
@@ -553,6 +555,7 @@ class App {
       btn('alignTop', 'alignTop', 'Align top (Alt+W)'), btn('alignMiddle', 'alignMiddle', 'Align middle (Alt+V)'), btn('alignBottom', 'alignBottom', 'Align bottom (Alt+S)'), sep(),
       btn('distH', 'distH', 'Distribute horizontally (3+)'), btn('distV', 'distV', 'Distribute vertically (3+)'),
       h('span', { class: 'tb-label', style: { marginLeft: 'auto', color: 'var(--text-dim)' } }, 'Other edits: ask your AI assistant (MCP)'),
+      h('button', { class: 'btn play-btn', title: 'Simulator: run the current UI like the light (F1 / F2 dials) and see the light output', onclick: () => this.simulator.toggle() }, '▶ Play'),
       h('button', { class: 'btn wifi-btn', title: 'Give a light the WiFi network it joins (sent over Bluetooth)', onclick: () => this.wifiDialog.open() }, 'WiFi Setup'),
       h('button', { class: 'btn primary build-btn', title: 'Export the UI, compile the firmware and upload it to lights on the WiFi network', onclick: () => this.buildDialog.start() }, '▶ Build'),
       h('button', { class: 'btn upload-btn', title: 'Upload the last build to lights on the WiFi network (no compiling)', onclick: () => this.buildDialog.startUpload() }, '⇪ Upload'),
