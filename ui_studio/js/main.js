@@ -11,7 +11,8 @@ import { Hierarchy, ScreensPanel, ConsolePanel, HistoryPanel, TYPE_LABEL } from 
 import { InfoPanel } from './info.js';
 import { BuildDialog, MIN_LIGHT_FW } from './build.js';
 import { WifiDialog } from './wifi.js';
-import { Simulator } from './simulator.js';
+import { Simulator, SIM_KEYS } from './simulator.js';
+import { Tour } from './tour.js';
 import { PALETTE, PALETTE_NAMES } from './render.js';
 import { h, icon, wicon } from './icons.js';
 import { Bridge } from './bridge.js';
@@ -51,6 +52,7 @@ class App {
     this.buildDialog = new BuildDialog(this);
     this.wifiDialog = new WifiDialog(this);
     this.simulator = new Simulator(this);
+    this.tour = new Tour(this);
     this.bridge = new Bridge(this);
 
     this.buildToolbar();
@@ -70,7 +72,8 @@ class App {
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); close(); }
       e.stopPropagation(); e.preventDefault();   // nothing reaches the editor while the notice is open
     };
-    const close = () => { document.removeEventListener('keydown', kd, true); layer.remove(); };
+    // after OK: the guided tour on the first start
+    const close = () => { document.removeEventListener('keydown', kd, true); layer.remove(); this.tour.startIfNew(); };
     const ok = h('button', { class: 'btn primary notice-ok', onclick: close }, 'OK');
     layer.append(h('div', { class: 'modal notice-modal', role: 'alertdialog', 'aria-modal': 'true' },
       h('div', { class: 'notice-hero' },
@@ -559,7 +562,13 @@ class App {
       h('button', { class: 'btn wifi-btn', title: 'Give a light the WiFi network it joins (sent over Bluetooth)', onclick: () => this.wifiDialog.open() }, 'WiFi Setup'),
       h('button', { class: 'btn primary build-btn', title: 'Export the UI, compile the firmware and upload it to lights on the WiFi network', onclick: () => this.buildDialog.start() }, '▶ Build'),
       h('button', { class: 'btn upload-btn', title: 'Upload the last build to lights on the WiFi network (no compiling)', onclick: () => this.buildDialog.startUpload() }, '⇪ Upload'),
-      h('button', { class: 'tb-btn', title: 'Shortcuts (?)', style: { fontWeight: '600' }, onclick: () => this.cmd('shortcuts') }, '?'),
+      h('button', { class: 'tb-btn help-btn', title: 'Help: guided tour, keyboard shortcuts', style: { fontWeight: '600' }, onclick: (e) => {
+        const r = e.currentTarget.getBoundingClientRect();
+        showMenu(r.right - 190, r.bottom + 4, [
+          { label: 'Guided tour', action: () => this.tour.start() },
+          { label: 'Keyboard shortcuts', key: '?', action: () => this.cmd('shortcuts') },
+        ]);
+      } }, '?'),
     );
     const ch = $('canvas-head');
     const zoom = h('input', { id: 'zoom-field', class: 'tb-zoom', value: '100%' });
@@ -619,7 +628,8 @@ class App {
       ['Space+drag / middle-button drag', 'Pan'], ['Wheel / pinch', 'Zoom'], ['0 / 1', 'Fit screen / 100%'],
       [MOD + 'Z / ' + MOD + '⇧Z', 'Undo / redo'], [MOD + 'S', 'Save'], ['Tab / Shift+Tab', 'Next / previous sibling'], ['Esc', 'Select parent'],
     ];
-    this.modal('Shortcuts', h('table', { class: 'kbd-table' }, rows.map(([k, v]) => h('tr', {}, h('td', {}, k), h('td', {}, v)))), [['Close', true]]);
+    const table = (list) => h('table', { class: 'kbd-table' }, list.map(([k, v]) => h('tr', {}, h('td', {}, k), h('td', {}, v))));
+    this.modal('Shortcuts', h('div', {}, table(rows), h('div', { class: 'kbd-section' }, 'Simulator (▶ Play)'), table(SIM_KEYS)), [['Close', true]]);
   }
 
   // ================================================================ modals

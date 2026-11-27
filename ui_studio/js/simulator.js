@@ -75,6 +75,22 @@ const scale = (c, k) => c.map((v) => v * k);
 const add = (a, b) => a.map((v, i) => v + b[i]);
 const ledMix = (ch) => ch.reduce((acc, v, i) => add(acc, scale(LED_RGB[i], v)), [0, 0, 0]);
 
+/** Keys that press a dial: F1 / F2 keys (fn+F1 / fn+F2 on a Mac), 1 / 2, Q / W. Held 1 s = long press. */
+export const SIM_KEYS = [
+  ['F1  or  1  or  Q', 'Press the F1 dial (hold 1 s = long press)'],
+  ['F2  or  2  or  W', 'Press the F2 dial (hold 1 s = long press)'],
+  ['← / →', 'Turn the F1 dial'],
+  ['↓ / ↑', 'Turn the F2 dial'],
+  ['Shift + turn', 'Fast turn'],
+  ['Esc', 'Stop the simulator'],
+];
+function pressKey(e) {
+  if (e.ctrlKey || e.metaKey || e.altKey) return null;
+  if (e.key === 'F1' || e.code === 'Digit1' || e.code === 'Numpad1' || e.code === 'KeyQ') return 'F1';
+  if (e.key === 'F2' || e.code === 'Digit2' || e.code === 'Numpad2' || e.code === 'KeyW') return 'F2';
+  return null;
+}
+
 export class Simulator {
   constructor(app) {
     this.app = app;
@@ -627,7 +643,7 @@ export class Simulator {
         h('div', { class: 'sim-title' }, 'SIMULATOR'),
         dial('F2', 'F2 dial', 'Dial F2'),
         dial('F1', 'F1 dial', 'Dial F1'),
-        h('div', { class: 'sim-help' }, h('b', {}, 'Keyboard'), h('br'), '← → turn F1, ↓ ↑ turn F2', h('br'), 'Q = F1, W = F2 (hold = long)', h('br'), 'Shift = fast turn'),
+        h('div', { class: 'sim-help' }, h('b', {}, 'Keyboard'), h('br'), 'F1 / 1 / Q = press F1', h('br'), 'F2 / 2 / W = press F2', h('br'), '(hold 1 s = long press)', h('br'), '← → turn F1, ↓ ↑ turn F2', h('br'), 'Shift = fast turn'),
         h('button', { class: 'btn small', title: 'Start again with the current UI and factory settings', onclick: () => this.restart('Reset to factory settings', true) }, 'Reset')),
       this.lcdWrap,
       h('div', { class: 'sim-light' },
@@ -702,14 +718,14 @@ export class Simulator {
     if (!this.active || e.target.closest?.('input, textarea, select, [contenteditable]')) return;
     const map = { ArrowLeft: ['F1', -1], ArrowRight: ['F1', 1], ArrowDown: ['F2', -1], ArrowUp: ['F2', 1] };
     if (map[e.key]) { e.preventDefault(); e.stopPropagation(); this.turn(map[e.key][0], map[e.key][1], e.shiftKey); return; }
-    const k = e.key.toLowerCase();
-    if (k === 'q' || k === 'w') { e.preventDefault(); e.stopPropagation(); if (!e.repeat) this.press(k === 'q' ? 'F1' : 'F2', true); }
+    const dial = pressKey(e);
+    if (dial) { e.preventDefault(); e.stopPropagation(); if (!e.repeat) this.press(dial, true); return; }
     if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); this.stop(); }
   }
   keyUp(e) {
     if (!this.active) return;
-    const k = e.key.toLowerCase();
-    if (k === 'q' || k === 'w') { e.preventDefault(); e.stopPropagation(); this.press(k === 'q' ? 'F1' : 'F2', false); }
+    const dial = pressKey(e);
+    if (dial) { e.preventDefault(); e.stopPropagation(); this.press(dial, false); }
   }
 
   flash(text) {

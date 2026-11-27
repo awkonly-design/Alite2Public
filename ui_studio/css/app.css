@@ -599,3 +599,25 @@ html, body { background: var(--bg); color: var(--text); }
 .sim-pixel-name { position: absolute; left: 0; right: 0; bottom: -20px; text-align: center; font-size: 11px; color: #8d95a3; }
 .sim-readout { margin-top: 22px; white-space: pre-line; font: 12px/1.6 ui-monospace, Menlo, monospace; color: #d8dce3; background: rgba(0, 0, 0, .3); border: 1px solid #343941; border-radius: 6px; padding: 8px 10px; min-height: 66px; }
 .sim-note { font-size: 10.5px; line-height: 1.45; color: #7d8592; }
+
+/* ---------- guided tour (balloon tips) ---------- */
+.tour-layer { position: fixed; inset: 0; z-index: 280; }
+.tour-spot { position: fixed; border-radius: 8px; box-shadow: 0 0 0 9999px rgba(20, 24, 32, .55), 0 0 0 2px #f2b45a, 0 0 18px 4px rgba(242, 180, 90, .55); transition: all .25s ease; pointer-events: none; }
+.tour-balloon { position: fixed; width: 300px; padding: 12px 14px 10px; border-radius: 10px; background: #fff; color: #1d1d1f; box-shadow: 0 14px 40px rgba(0, 0, 0, .35); transition: left .25s ease, top .25s ease; }
+.tour-arrow { position: absolute; width: 14px; height: 14px; background: #fff; transform: rotate(45deg); display: none; }
+.tour-balloon[data-side="bottom"] .tour-arrow { display: block; top: -7px; margin-left: -7px; }
+.tour-balloon[data-side="top"] .tour-arrow { display: block; bottom: -7px; margin-left: -7px; }
+.tour-balloon[data-side="right"] .tour-arrow { display: block; left: -7px; margin-top: -7px; }
+.tour-balloon[data-side="left"] .tour-arrow { display: block; right: -7px; margin-top: -7px; }
+.tour-head { display: flex; align-items: center; margin-bottom: 2px; }
+.tour-step { flex: 1; font-size: 11px; font-weight: 600; letter-spacing: .06em; color: #c07a14; }
+.tour-x { border: none; background: none; font-size: 18px; line-height: 1; color: #8b9099; cursor: pointer; padding: 0 2px; }
+.tour-x:hover { color: #1d1d1f; }
+.tour-title { font: 600 15px/1.3 Montserrat, Inter, sans-serif; margin-bottom: 4px; }
+.tour-text { font-size: 12.5px; line-height: 1.55; color: #3c4553; }
+.tour-dots { display: flex; gap: 5px; margin: 10px 0 8px; }
+.tour-dot { width: 7px; height: 7px; border-radius: 50%; background: #d3d7de; cursor: pointer; }
+.tour-dot.done { background: #f2cf95; }
+.tour-dot.on { background: #f2a33a; transform: scale(1.25); }
+.tour-foot { display: flex; align-items: center; gap: 8px; }
+.kbd-section { margin: 12px 0 4px; font-weight: 600; color: #1d1d1f; }
