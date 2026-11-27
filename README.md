@@ -47,7 +47,9 @@ install it on your light over WiFi — **vibe coding for your own light**.
 - **Redesign the screen UI** — move, resize and restyle widgets, change texts, colours, fonts and images, add
   screens and menu items, and see every change live in the browser editor.
 - **Add your own light effects** — new effects (strobe, fire, police, custom chases …) with their own parameters and
-  menu entries.
+  menu entries, and watch them run in the **Studio simulator** before you flash anything.
+- **Try it without the light** — **▶ Play** runs your UI with the F1 / F2 dials and shows the light output on three
+  pixels, right in the browser.
 - **Change how the light behaves** — key and encoder functions, menus, default settings, colour modes, presets.
 - **Add DMX / Art-Net charts** — define your own DMX personalities for Art-Net, sACN or LumenRadio.
 - **Translate** — change or add Korean / Japanese texts.
@@ -217,6 +219,38 @@ is done by asking your AI assistant (section 5).
 finds on the WiFi network. When the build has finished press **Next**, tick one or more lights and press **Upload**: a password window asks for the
 8-character OTA password each light shows on its LCD (**Setup → Radio** page, at the bottom under the IP address),
 then each one is updated over WiFi with its own progress bar. Details: [ui_studio/README.md](ui_studio/README.md).
+
+### Simulator: try your UI and effects without the light
+
+**▶ Play** turns the canvas into a working ALITE 2. The two push dials are on the left — turn them with the mouse
+wheel, by dragging or with the arrow keys, click to press, hold for a second for a long press — and the screen reacts
+exactly like the light: menus, tabs, sliders, boost, slots, even *Flip screen*. On the right, three boxes show the
+light output of the three pixels live.
+
+<p align="center">
+  <img src="docs/images/studio-sim-fire.jpg" width="80%" alt="Alite2 Studio simulator running the Fire effect">
+</p>
+
+**It makes developing effects much easier.** Writing a new effect on the device means build → upload → walk to the
+light → look → repeat. In the simulator you see every pixel move at once, side by side, while you change speed and
+dimming with the dials:
+
+- **Per-pixel effects at a glance** — chases, alternating flashes and flicker patterns (Fire, Candle, Accident,
+  Welding, TV …) are easy to judge when all three pixels are next to each other on the screen.
+- **Instant feedback, no flashing** — change the code or the UI, press Play again, and it runs with your current UI;
+  your light stays on the firmware it has.
+- **Same logic as the firmware** — the key handling, value callbacks, default settings and effect code are ported
+  from `src/Alite2/`, including the key-repeat delays, so menu navigation feels like the real thing.
+- **Ask the AI to do both** — "add a Strobe effect" changes the firmware and the simulator together (see `CLAUDE.md`),
+  so you can try it in the browser before you build.
+
+<p align="center">
+  <img src="docs/images/studio-sim-accident.jpg" width="49%" alt="Simulator: Accident effect, pixels flashing red and blue">
+  <img src="docs/images/studio-sim-color.jpg" width="49%" alt="Simulator: Color page with hue, saturation and dimming">
+</p>
+
+The pixel colours are an approximation (generic colour-temperature, hue and wavelength formulas, no LED calibration
+or output limits), so check the final colours on the light itself.
 
 ## 5. Vibe coding with an AI assistant
 
