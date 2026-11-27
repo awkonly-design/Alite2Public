@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "alite2-ui": {
+      "command": "node",
+      "args": ["ui_studio/mcp/server.js"]
+    }
+  }
+}

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Alite2 Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div id="app">
+  <header id="menubar">
+    <div class="brand"><span class="logo"></span>Alite2 Studio</div>
+    <div class="project-title" id="project-title">Loading…</div>
+    <div class="menubar-right"><span id="dirty-flag"></span><button id="mcp-status" class="mcp-status" data-state="off"><span class="dot"></span>AI (MCP)</button></div>
+  </header>
+
+  <div id="toolbar"></div>
+
+  <div id="main">
+    <aside id="left" class="column">
+      <section class="panel" id="panel-screens" style="flex: 0 0 230px">
+        <div class="panel-head"><span>SCREENS</span></div>
+        <div class="panel-body" id="screens-body"></div>
+      </section>
+      <div class="splitter h" data-resize="panel-screens"></div>
+      <section class="panel grow" id="panel-hierarchy">
+        <div class="panel-head"><span>STRUCTURE</span><div class="panel-tools" id="hier-tools"></div></div>
+        <div class="panel-search"><input id="hier-search" type="search" placeholder="Search..." spellcheck="false"></div>
+        <div class="panel-body" id="hier-body" tabindex="0"></div>
+      </section>
+    </aside>
+    <div class="splitter v" data-resize="left"></div>
+
+    <div id="center" class="column">
+      <div id="canvas-head"></div>
+      <div id="canvas-viewport" tabindex="0">
+        <div id="world"></div>
+        <div id="overlay"></div>
+        <div id="welcome" class="welcome">
+          <div class="welcome-card">
+            <div class="welcome-logo"></div>
+            <h1>Alite2 Studio</h1>
+            <p id="welcome-msg">Loading the Alite2 UI project…</p>
+            <p class="hint">If nothing appears, start the server with <code>ui_studio/run.sh</code>.</p>
+            <p class="hint fw-min">Alite2Public can be used on lights with firmware <b>1.2.6 or later</b> (WiFi OTA password shown on the LCD: Setup → Radio page, at the bottom under the IP address).</p>
+          </div>
+        </div>
+      </div>
+      <div class="splitter h" data-resize="panel-bottom" data-invert="1"></div>
+      <section class="panel" id="panel-bottom" style="flex: 0 0 130px">
+        <div class="panel-head tabs" id="bottom-tabs">
+          <button class="tab active" data-tab="console">CONSOLE</button>
+          <button class="tab" data-tab="history">HISTORY</button>
+        </div>
+        <div class="panel-body tab-page active" id="console-body" data-page="console"></div>
+        <div class="panel-body tab-page" id="history-body" data-page="history"></div>
+      </section>
+    </div>
+
+    <div class="splitter v" data-resize="right" data-invert="1"></div>
+    <aside id="right" class="column">
+      <section class="panel grow" id="panel-inspector">
+        <div class="panel-head"><span>SELECTION</span></div>
+        <div class="panel-body" id="info-body"></div>
+      </section>
+    </aside>
+  </div>
+
+  <footer id="statusbar">
+    <span id="status-msg">Ready</span>
+    <span class="spacer"></span>
+    <span id="status-sel"></span>
+    <span id="status-cursor"></span>
+    <span id="status-zoom"></span>
+  </footer>
+</div>
+
+<div id="menu-layer"></div>
+<div id="modal-layer"></div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+build/
+.cache/
+node_modules/
+ui_studio/project/backup/
+.DS_Store
+.claude/settings.local.json
+ui_studio/factory.local.json

@@ -1,0 +1,20 @@
+{
+  "name": "alite2-ui-studio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Browser UI editor for the Alite2 firmware LCD screens, with an MCP server for AI assistants",
+  "scripts": {
+    "start": "node mcp/server.js --http",
+    "mcp": "node mcp/server.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "multicast-dns": "^7.2.5",
+    "ws": "^8.23.0",
+    "zod": "^4.6.7"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

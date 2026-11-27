@@ -1,0 +1,49 @@
+Alite2 Firmware Personal Use License
+Copyright (c) 2026 HDS Co., Ltd. All rights reserved.
+
+1. Permission
+   Anyone may use, modify, build and install the source code, the UI editor (ui_studio) and the binary
+   libraries in this repository (the "Software") on an Alite2 product they own, for personal purposes only.
+
+2. Restrictions
+   You may NOT:
+   a. publish, distribute, sell, rent or sublicense the Software or any modified version of its source code
+      (including public repositories, file sharing or posting modified sources);
+   b. use the Software or any part of it to build another product or service, or install it on other hardware
+      that is sold or distributed;
+   c. sell, rent, transfer or otherwise commercially use a unit running modified firmware;
+   d. decompile, disassemble or reverse-engineer the precompiled libraries (src/libraries/Alite2Calib,
+      src/libraries/Alite2Link), extract their data or code and use it elsewhere, or replace them to
+      circumvent their function;
+   e. remove or falsify the manufacturer or certification information of the product when providing it
+      to others.
+
+3. Certification
+   The product is certified (KC, FCC, MIC, ...) with its factory firmware. A unit whose firmware has been
+   modified is no longer identical to the certified product, its certification does not carry over, and it
+   must be re-certified in the relevant country. The person who modified the unit is legally responsible for
+   operating it without re-certification. Regardless of re-certification, selling, renting or transferring a
+   modified unit remains prohibited under section 2c.
+
+4. No warranty, limitation of liability
+   The Software is provided "AS IS", without warranty of any kind, express or implied. The copyright holder
+   is not liable for any damage resulting from modified firmware, including hardware failure, overheating of
+   the LEDs or the battery, data loss or certification violations. Units running modified firmware may no
+   longer be covered by the manufacturer's warranty.
+
+5. Third-party components
+   Third-party components included in this repository or used to build it remain under their own licenses
+   (see THIRD-PARTY below). This license does not restrict those licenses.
+
+6. Termination
+   Any breach of these terms automatically terminates the rights granted by this license. Any use beyond
+   the scope of this license (commercial use, distribution, ...) requires prior written permission from the
+   copyright holder.
+
+
+THIRD-PARTY
+- LVGL (MIT) — graphics library, and the Montserrat font data it includes (SIL OFL 1.1)
+- Noto Sans CJK font data in src/Alite2/fonts (SIL OFL 1.1)
+- web_fs.ino is based on the FSWebServer example of the Arduino-ESP32 WebServer library (LGPL 2.1)
+- Arduino-ESP32 core and the Arduino libraries installed by scripts/setup.sh (their own licenses)
+- ui_studio runtime dependencies in ui_studio/node_modules (MIT / ISC, see each package)
