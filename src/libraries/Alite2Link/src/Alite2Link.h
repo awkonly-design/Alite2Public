@@ -20,9 +20,8 @@
  *
  * Update protection (runs before setup(), cannot be disabled by the firmware):
  *   - an OTA image is accepted only if it contains Alite2Link (so recovery is always present)
- *   - a new image must run 180 s without a reset, otherwise the bootloader returns to the previous one
+ *   - a new image is kept as soon as it starts (power-off / restart afterwards does not return to the previous one)
  *   - 3 quick crashes / restarts in a row: boot the previous firmware, then recovery mode
- *   - hold F2 while switching the light on (3 s): recovery mode
  *   Recovery mode skips setup()/loop(): WiFi (saved access points) + BLE provisioning + ArduinoOTA,
  *   the LCD backlight blinks. It ends with a successful update, or hold F1 for 2 s to switch the light off.
  ******************************************************************************/
@@ -117,7 +116,7 @@ void alite2_ota_begin(const char *hostname_prefix, const char *password, uint16_
 const char *alite2_ota_password(void);             // current OTA password, "" while WiFi is not connected
 void alite2_ota_loop(void);
 const char *alite2_ota_hostname(void);
-bool alite2_ota_pending_verify(void);              // true during the 180 s check of a freshly installed image
+bool alite2_ota_pending_verify(void);              // image not confirmed yet (always false in setup()/loop(): confirmed at start)
 bool alite2_link_recovery_mode(void);              // never true inside setup()/loop() (recovery does not run them)
 bool alite2_ota_revert(void);                      // boot the other OTA slot if it holds a valid app (restarts); false if none
 

@@ -19,14 +19,13 @@ const unsupported = (d) => !!d.factory;   // HDS-15W: below 1.2.6
 export const MIN_LIGHT_FW = '1.2.6';
 export const MIN_FW_NOTE = `Alite2Public can be used on lights with firmware ${MIN_LIGHT_FW} or later: they show the WiFi OTA password on the LCD (Setup → Radio page, at the bottom under the IP address) and can go back to the official firmware with Setup → H/W → Upgrade F/W. Update older lights (e.g. HDS-15W) to ${MIN_LIGHT_FW} or later first.`;
 
-// Ways back to a previous / the official firmware (Alite2Link: 180 s check, boot loop guard, recovery, menu items).
+// Ways back to a previous / the official firmware (Alite2Link: boot loop guard, recovery, menu items).
 export const REVERT_TITLE = 'Going back to a previous firmware';
 export const REVERT_STEPS = [
-  ['Within 3 minutes', 'A new firmware must run for 3 minutes before it is kept. Switch the light off and on before that and it starts the previous firmware again.'],
   ['Crash protection', 'If the new firmware restarts 3 times in a row within 30 seconds, the light starts the previous firmware by itself.'],
   ['Setup → H/W → Revert F/W', 'Starts the firmware in the other update slot (usually the one before the last upload).'],
   ['Setup → H/W → Upgrade F/W', 'Downloads and installs the official firmware (WiFi mode, connected). The light restarts and downloads with the LEDs off and the backlight blinking. Needs a light that ran official firmware 1.2.6 or later.'],
-  ['Recovery mode: hold F2 while switching on (3 s)', 'The firmware does not start: LEDs off, the backlight blinks. The light joins its saved WiFi (or gets one from the app over BLE) and accepts an upload from here with the last password it showed. Hold F1 for 2 s to switch it off.'],
+  ['Recovery mode (after a boot loop)', 'If the previous firmware loops too, the firmware does not start: LEDs off, the backlight blinks. The light joins its saved WiFi (or gets one from the app over BLE) and accepts an upload from here with the last password it showed. Hold F1 for 2 s to switch it off.'],
 ];
 const revertList = () => h('div', { class: 'revert-list' },
   ...REVERT_STEPS.map(([t, d]) => h('div', { class: 'revert-item' }, h('b', {}, t), h('br'), d)));
@@ -236,7 +235,7 @@ export class BuildDialog {
       else if (uploading) summary = `Uploading to ${up.length} light(s)…`;
       else if (st.phase === 'built') summary = 'Select the lights to update.';
       else if (st.phase === 'done' && st.cancelled) summary = 'Upload cancelled.';
-      else if (st.phase === 'done') { const ok = up.filter((u) => u.status === 'done').length; summary = `${ok} of ${up.length} light(s) updated${ok ? ' — they restart with the new firmware. Keep them switched on for 3 minutes: a restart or power-off before that returns to the previous firmware.' : ''}`; }
+      else if (st.phase === 'done') { const ok = up.filter((u) => u.status === 'done').length; summary = `${ok} of ${up.length} light(s) updated${ok ? ' — they restart with the new firmware.' : ''}`; }
     }
     const isErr = isUpdate ? uploadErr : st.phase === 'error' && !uploadErr;
     const errs = isUpdate ? [] : (st.errors || []).slice(0, 8);

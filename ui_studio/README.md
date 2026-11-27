@@ -34,8 +34,8 @@ on the device and can fix its layout by hand (position, size, align) and edit te
 the same firmware on another light or after a failed upload. Press Build after changing the UI or the code.
 
 A light shows up only in WiFi mode (Setup → Radio → Artnet, hold F2) after it joined the same network as this
-computer, or in recovery mode (shown as **Recovery mode**). After an update keep the light on for 3 minutes, or it
-returns to the previous firmware. In recovery mode the light uses the last password it showed on screen. Alite2Public needs light firmware **1.2.6 or later**. Lights
+computer, or in recovery mode (shown as **Recovery mode**). A new firmware is kept as soon as it
+starts. In recovery mode the light uses the last password it showed on screen. Alite2Public needs light firmware **1.2.6 or later**. Lights
 still running older factory firmware (`HDS-15W`) are listed as **Old factory F/W** but cannot be selected: update them
 to 1.2.6 or later first. Lights with factory firmware 1.2.6 or later (`Alite2-XXXXXX` without a version) are listed as
 **New factory firmware** and need the password shown on the light, like this firmware. Images without the Alite2Link library are rejected by the light. Requirements: `../scripts/setup.sh` done (arduino-cli, esp32 core with `espota.py`) and Python 3.
@@ -46,13 +46,11 @@ in the editor.
 
 ### Going back to a previous firmware
 
-- **Within 3 minutes:** a new firmware must run for 3 minutes before it is kept. Switch the light off and on before
-  that and it starts the previous firmware again.
 - **Crash protection:** 3 restarts in a row within 30 seconds start the previous firmware automatically.
 - **Setup → H/W → Revert F/W:** starts the firmware in the other update slot.
 - **Setup → H/W → Upgrade F/W:** downloads and installs the official firmware (WiFi mode, connected; the light restarts
   and downloads with the LEDs off and the backlight blinking). Needs a light that ran official firmware 1.2.6 or later.
-- **Recovery mode — hold F2 while switching on (3 s):** the firmware does not start, the LEDs stay off and the backlight
+- **Recovery mode (after a boot loop):** the firmware does not start, the LEDs stay off and the backlight
   blinks. The light joins its saved WiFi (or gets one from the app over BLE) and accepts an upload from Alite2 Studio
   with the last password it showed. Hold F1 for 2 s to switch it off.
 

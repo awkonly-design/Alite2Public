@@ -15,8 +15,8 @@ ESP32-S3 Arduino firmware (arduino-esp32 3.0.2, LVGL 8.3.11) for a battery LED l
   (name "A SUN", fixed UUIDs and packets), WiFi credentials and connection, ArduinoOTA, wireless mode numbers.
   It calls the hooks in `link_hooks.ino`. Do not try to reimplement or bypass it — firmware updates depend on it.
   It also guards updates: it defines `initVariant()` and `verifyRollbackLater()` (do not define them in the sketch),
-  rejects OTA images without the library, rolls back a new image that restarts within 180 s, and enters recovery
-  mode after a boot loop or when F2 is held at power-on. Keep the light on for 3 minutes after an upload.
+  rejects OTA images without the library, keeps a new image as soon as it starts, and after a boot loop starts the
+  previous firmware, then recovery mode.
   New BLE packets go in `ble_user.ino` (`alite2_on_ble_user_packet`, reply with `alite2_ble_notify`, heads `U_...`).
   Protocol: docs/BLE_PROTOCOL.md.
 - `src/libraries/Alite2Calib/` — precompiled LED calibration library (header + `.a`). Its source is not public;

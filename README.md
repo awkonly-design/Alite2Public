@@ -86,7 +86,7 @@ on the command line. Then just describe what you want, for example:
 The assistant edits the UI through the MCP tools (you watch the changes in the browser), changes the firmware code,
 and builds it. To install it, press **▶ Build** in Alite2 Studio: when the build has finished press **Next**, tick
 your lights and press **Upload**, then type the 8-character OTA password each light shows on its LCD
-(**Setup → Radio**, at the bottom under the IP address). Keep the light switched on for 3 minutes after an update.
+(**Setup → Radio**, at the bottom under the IP address).
 
 Other `run.sh` modes: `./ui_studio/run.sh` starts only the editor (no AI), `./ui_studio/run.sh stop` stops it.
 
@@ -192,12 +192,9 @@ A light cannot be opened to flash it over USB, so the `Alite2Link` library prote
 
 - **Only firmware that contains Alite2Link is accepted.** A light rejects any other image during the upload
   (Alite2 Studio shows "Rejected by the light").
-- **3-minute check.** After an update the new firmware must run **180 seconds without a restart**. If it restarts or
-  is switched off before that, the light automatically goes back to the previous firmware. Keep the light switched on
-  for 3 minutes after an update.
+- **Kept at once.** A new firmware is kept as soon as it starts: switching the light off and on keeps it.
 - **Boot loop.** Three quick crashes / restarts in a row: the light starts the previous firmware; if that loops too,
   it enters recovery mode.
-- **Manual recovery.** Hold **F2** and switch the light on with F1; keep F2 pressed for 3 seconds.
 
 In **recovery mode** your firmware does not run. The screen stays dark and the backlight blinks: two short blinks
 while it connects, fast blinking once it is on WiFi. The light connects to its saved WiFi access points, and it also
