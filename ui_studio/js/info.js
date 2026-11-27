@@ -4,7 +4,7 @@
 import { UNIT, ALIGNS, unescapeText, escapeText } from './project.js';
 import { TYPE_LABEL } from './panels.js';
 import { h } from './icons.js';
-import { MIN_FW_NOTE, REVERT_TITLE, REVERT_STEPS } from './build.js';
+import { MIN_FW_NOTE } from './build.js';
 
 const U = { [UNIT.PX]: 'px', [UNIT.PCT]: '%', [UNIT.CONTENT]: 'content' };
 const TEXT_KEY = { LABEL: 'Text', CHECKBOX: 'Title', TABPAGE: 'Title', DROPDOWN: 'Options', ROLLER: 'Options' };
@@ -229,9 +229,6 @@ export class InfoPanel {
       'Dropdown / roller options, tabs, colours, fonts, adding or removing widgets, translations and exporting to the firmware are done by Claude Code / Codex over MCP.',
       h('br'), h('span', { class: 'dim' }, 'e.g. "Make the percentage label on MainScreen bigger and export it to the firmware"'),
       h('br'), h('br'),
-      h('b', {}, 'Light firmware 1.2.6 or later'), h('br'), MIN_FW_NOTE,
-      h('br'), h('br'),
-      h('b', {}, REVERT_TITLE),
-      ...REVERT_STEPS.flatMap(([t, d]) => [h('br'), h('span', { class: 'revert-step' }, '• ', h('b', {}, t), ': ', d)]));
+      h('b', {}, 'Light firmware 1.2.6 or later'), h('br'), MIN_FW_NOTE);
   }
 }

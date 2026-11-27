@@ -291,10 +291,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .xy { display: inline-flex; align-items: center; gap: 4px; color: var(--text-dim); }
 .xy .fld.num { width: 64px; }
 .info-note { color: var(--text-dim); margin: 6px 0 10px; line-height: 1.5; }
-.revert-note { margin-top: 10px; }
-.revert-list { margin-top: 4px; }
-.revert-item { margin: 4px 0 0; }
-.revert-item b, .revert-note > b { color: var(--text); }
 .info-hint { margin-top: 14px; padding: 10px; border-radius: 6px; background: var(--field); color: var(--text-dim); line-height: 1.6; font-size: 12px; }
 .info-hint b { color: var(--text); }
 .info-hint .dim { opacity: .8; }
@@ -523,3 +519,47 @@ html, body { background: var(--bg); color: var(--text); }
 .pw-row .dev-pw { width: 110px; height: 26px; font-size: 14px; }
 .pw-row small { color: #8b9099; }
 .pw-fw { color: #7a5200; }
+
+/* ---------- WiFi setup wizard ---------- */
+.wifi-btn { margin-left: 10px; height: 26px; border-radius: 13px; }
+.wifi-btn + .build-btn { margin-left: 6px; }
+.wifi-modal { width: 560px; }
+.wz-steps { display: flex; gap: 6px; }
+.wz-step { flex: 1; display: flex; align-items: center; gap: 6px; padding: 6px 8px; border-radius: 6px; background: #e9ebef; color: #6a6f78; font-weight: 500; }
+.wz-step.on { background: #eef4fc; border: 1px solid #c3d4ea; color: #1d1d1f; }
+.wz-step.done { color: #1f8a3e; }
+.wz-num { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; border-radius: 9px; background: #fff; border: 1px solid #b8bcc4; font-size: 11px; font-weight: 700; }
+.wz-step.on .wz-num { background: var(--accent); border-color: var(--accent); color: #fff; }
+.wz-step.done .wz-num { background: #1f8a3e; border-color: #1f8a3e; color: #fff; }
+.wz-page p { margin: 0 0 8px; }
+.wz-list { margin: 0 0 8px; padding-left: 20px; line-height: 1.6; }
+.wz-list li { margin: 2px 0; }
+.wz-row { display: flex; align-items: center; gap: 8px; margin: 4px 0 10px; }
+.wz-inline { margin: 0; }
+.wz-net { border: 1px solid #c3c3c3; border-radius: 8px; padding: 8px 10px; background: rgba(255, 255, 255, .6); margin-bottom: 8px; }
+.wz-net-head { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+.wz-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.wz-fields .fld { height: 24px; padding: 0 8px; min-width: 0; }
+.wz-check { display: inline-flex; align-items: center; gap: 4px; cursor: pointer; }
+.wz-busy { display: flex; align-items: center; gap: 8px; }
+.wz-spin { flex: none; width: 12px; height: 12px; border: 2px solid #c3d4ea; border-top-color: var(--accent); border-radius: 50%; animation: wz-spin .8s linear infinite; }
+@keyframes wz-spin { to { transform: rotate(360deg); } }
+.wz-saved { width: 100%; height: 24px; margin-bottom: 6px; padding: 0 6px; }
+.wz-after { padding: 8px 10px; border-radius: 6px; background: #eef4fc; border: 1px solid #c3d4ea; color: #3c4553; }
+.wz-next { margin-top: 10px; padding: 8px 10px; border-radius: 6px; background: #fff6e0; border: 1px solid #f0d08a; color: #3c4553; }
+.wz-next > b { display: block; margin-bottom: 4px; color: #1d1d1f; }
+
+/* ---------- start-up notice (closes only with OK) ---------- */
+.notice-layer { position: fixed; inset: 0; z-index: 300; display: flex; align-items: center; justify-content: center; background: rgba(40, 46, 56, .55); }
+.notice-modal { width: 480px; }
+.notice-modal .modal-body p { margin: 0 0 10px; }
+.notice-ok { min-width: 90px; }
+.notice-modal { width: 520px; overflow: hidden; border: none; background: #f7f7f8; }
+.notice-hero { position: relative; height: 210px; background: #0d1014; }
+.notice-hero img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 60%; }
+.notice-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8, 10, 14, 0) 35%, rgba(8, 10, 14, .85) 100%); }
+.notice-hero-text { position: absolute; left: 18px; right: 18px; bottom: 14px; z-index: 1; color: #fff; }
+.notice-kicker { display: block; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #f2b45a; font-weight: 600; text-shadow: none; }
+.notice-title { margin-top: 2px; font: 600 19px/1.25 Montserrat, Inter, sans-serif; text-shadow: 0 1px 3px rgba(0, 0, 0, .6); }
+.notice-modal .modal-body { padding: 16px 18px 6px; }
+.notice-modal .modal-foot { border-top: none; padding: 8px 18px 16px; }

@@ -19,18 +19,6 @@ const unsupported = (d) => !!d.factory;   // HDS-15W: below 1.2.6
 export const MIN_LIGHT_FW = '1.2.6';
 export const MIN_FW_NOTE = `Alite2Public can be used on lights with firmware ${MIN_LIGHT_FW} or later: they show the WiFi OTA password on the LCD (Setup → Radio page, at the bottom under the IP address) and can go back to the official firmware with Setup → H/W → Upgrade F/W. Update older lights (e.g. HDS-15W) to ${MIN_LIGHT_FW} or later first.`;
 
-// Ways back to a previous / the official firmware (Alite2Link: boot loop guard, recovery, menu items).
-export const REVERT_TITLE = 'Going back to a previous firmware';
-export const REVERT_STEPS = [
-  ['Crash protection', 'If the new firmware restarts 3 times in a row within 30 seconds, the light starts the previous firmware by itself.'],
-  ['Setup → H/W → Revert F/W', 'Starts the firmware in the other update slot (usually the one before the last upload).'],
-  ['Setup → H/W → Upgrade F/W', 'Downloads and installs the official firmware (WiFi mode, connected). The light restarts and downloads with the LEDs off and the backlight blinking. Needs a light that ran official firmware 1.2.6 or later.'],
-  ['Recovery mode (after a boot loop)', 'If the previous firmware loops too, the firmware does not start: LEDs off, the backlight blinks. The light joins its saved WiFi (or gets one from the app over BLE) and accepts an upload from here with the last password it showed. Hold F1 for 2 s to switch it off.'],
-];
-const revertList = () => h('div', { class: 'revert-list' },
-  ...REVERT_STEPS.map(([t, d]) => h('div', { class: 'revert-item' }, h('b', {}, t), h('br'), d)));
-export const revertNote = () => h('div', { class: 'info-note revert-note' }, h('b', {}, REVERT_TITLE), revertList());
-
 export class BuildDialog {
   constructor(app) {
     this.app = app;
@@ -217,8 +205,7 @@ export class BuildDialog {
     // long explanations: below the lights and their gauges, in their own scrolling box
     const notes = h('div', { class: 'build-notes' },
       devRows.length ? h('div', { class: 'info-note' }, PW_WHERE + ' You enter it after pressing Upload.') : null,
-      h('div', { class: 'build-summary warn fw-note' }, MIN_FW_NOTE),
-      revertNote());
+      h('div', { class: 'build-summary warn fw-note' }, MIN_FW_NOTE));
 
     // ---- summary / log
     const nSel = devs.filter((d) => this.selected.has(devKey(d)) && !unsupported(d)).length;

@@ -9,7 +9,8 @@ import { History } from './history.js';
 import { Canvas, isTyping } from './canvas.js';
 import { Hierarchy, ScreensPanel, ConsolePanel, HistoryPanel, TYPE_LABEL } from './panels.js';
 import { InfoPanel } from './info.js';
-import { BuildDialog } from './build.js';
+import { BuildDialog, MIN_LIGHT_FW } from './build.js';
+import { WifiDialog } from './wifi.js';
 import { PALETTE, PALETTE_NAMES } from './render.js';
 import { h, icon, wicon } from './icons.js';
 import { Bridge } from './bridge.js';
@@ -47,6 +48,7 @@ class App {
     this.historyPanel = new HistoryPanel(this);
     this.info = new InfoPanel(this);
     this.buildDialog = new BuildDialog(this);
+    this.wifiDialog = new WifiDialog(this);
     this.bridge = new Bridge(this);
 
     this.buildToolbar();
@@ -56,6 +58,32 @@ class App {
     this.refreshAll();
     this.log('Alite2 Studio started');
     this.loadFromServer({ initial: true });
+    this.showFirmwareNotice();
+  }
+
+  /** Shown every time Studio opens: lights need firmware 1.2.6+. Closes only with OK (no Escape / outside click). */
+  showFirmwareNotice() {
+    const layer = h('div', { class: 'notice-layer' });
+    const kd = (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); close(); }
+      e.stopPropagation(); e.preventDefault();   // nothing reaches the editor while the notice is open
+    };
+    const close = () => { document.removeEventListener('keydown', kd, true); layer.remove(); };
+    const ok = h('button', { class: 'btn primary notice-ok', onclick: close }, 'OK');
+    layer.append(h('div', { class: 'modal notice-modal', role: 'alertdialog', 'aria-modal': 'true' },
+      h('div', { class: 'notice-hero' },
+        h('img', { src: 'img/alite2-hero.jpg', alt: 'ALITE 2' }),
+        h('div', { class: 'notice-hero-text' },
+          h('span', { class: 'notice-kicker' }, 'Before you start'),
+          h('div', { class: 'notice-title' }, `Light firmware ${MIN_LIGHT_FW} or later required`))),
+      h('div', { class: 'modal-body' },
+        h('p', {}, 'Alite2 Studio and the Alite2Public firmware work without problems only on lights running firmware ', h('b', {}, `${MIN_LIGHT_FW} or later`), '.'),
+        h('p', {}, 'Check the version on the light: ', h('b', {}, 'Setup → H/W'), ' page. Update older lights (e.g. HDS-15W) to ', h('b', {}, `${MIN_LIGHT_FW} or later`), ' before you build or upload anything.'),
+        h('div', { class: 'build-summary error' }, h('b', {}, 'Problems caused by using a light with firmware older than ' + MIN_LIGHT_FW + ' cannot be repaired.'))),
+      h('div', { class: 'modal-foot' }, ok)));
+    document.body.append(layer);
+    document.addEventListener('keydown', kd, true);
+    setTimeout(() => ok.focus(), 0);
   }
 
   // ================================================================ logging/status
@@ -525,6 +553,7 @@ class App {
       btn('alignTop', 'alignTop', 'Align top (Alt+W)'), btn('alignMiddle', 'alignMiddle', 'Align middle (Alt+V)'), btn('alignBottom', 'alignBottom', 'Align bottom (Alt+S)'), sep(),
       btn('distH', 'distH', 'Distribute horizontally (3+)'), btn('distV', 'distV', 'Distribute vertically (3+)'),
       h('span', { class: 'tb-label', style: { marginLeft: 'auto', color: 'var(--text-dim)' } }, 'Other edits: ask your AI assistant (MCP)'),
+      h('button', { class: 'btn wifi-btn', title: 'Give a light the WiFi network it joins (sent over Bluetooth)', onclick: () => this.wifiDialog.open() }, 'WiFi Setup'),
       h('button', { class: 'btn primary build-btn', title: 'Export the UI, compile the firmware and upload it to lights on the WiFi network', onclick: () => this.buildDialog.start() }, '▶ Build'),
       h('button', { class: 'btn upload-btn', title: 'Upload the last build to lights on the WiFi network (no compiling)', onclick: () => this.buildDialog.startUpload() }, '⇪ Upload'),
       h('button', { class: 'tb-btn', title: 'Shortcuts (?)', style: { fontWeight: '600' }, onclick: () => this.cmd('shortcuts') }, '?'),

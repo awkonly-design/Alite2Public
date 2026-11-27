@@ -142,7 +142,9 @@ custom partitions (`src/Alite2/partitions.csv`: two 5MB OTA slots + 6MB file sys
 ## 3. Update over WiFi (OTA)
 
 1. On the light: **Setup → Radio → Artnet**, press and hold F2. The light reboots in WiFi mode.
-2. Give it WiFi credentials (BLE provisioning from your app, or `DEFAULT_WIFI_SSID/PASS` in `config.h`).
+2. Give it WiFi credentials: **WiFi Setup** in Alite2 Studio (sends this computer's WiFi network to the light over
+   Bluetooth, Chrome or Edge; the light must be in Bluetooth mode), BLE provisioning from your app, or
+   `DEFAULT_WIFI_SSID/PASS` in `config.h`.
 3. Its IP address appears at the bottom of the **Setup → Radio** page on the light's LCD, and directly under it the
    light's **8-character OTA password** (upper-case letters and digits). On the network it is called `Alite2-XXXXXX` (last 6 hex digits of its MAC), so several
    lights can be told apart. Then either press **▶ Build** in Alite2 Studio (section 4), press **Upload** and type each
