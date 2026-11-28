@@ -515,6 +515,11 @@ void loop()
                 set_avg_count(0);
                 updatePulseEffect();
             }
+            else if (param.effect.no == EFFECT_LIGHTNING)
+            {
+                set_avg_count(0);
+                updateLightningEffect();
+            }
         }
 
         send_tlc_datas();

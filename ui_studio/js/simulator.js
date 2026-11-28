@@ -25,7 +25,7 @@ const WIRELESS = { OFF: 0, BLE: 1, ARTNET: 2, LUMEN: 3 };
 const UPDATE = { UPGRADE: 0, UNDO: 1, FACTORY_RESET: 2, LUMEN_RESET: 3, ENGLISH: 4, KOREAN: 5, JAPANESE: 6 };
 const COLOR_HSI = 0, COLOR_WAVE = 1;
 const TRIG = { OFF: 0, ON: 1, BLACKOUT: 2 };
-const EFFECT = { FIRE: 0, CANDLE: 1, FIREWORK: 2, FLICKER: 3, ACCIDENT: 4, EMERGENCY: 5, WELDING: 6, TV: 7, PULSE: 8 };
+const EFFECT = { FIRE: 0, CANDLE: 1, FIREWORK: 2, FLICKER: 3, ACCIDENT: 4, EMERGENCY: 5, WELDING: 6, TV: 7, PULSE: 8, LIGHTNING: 9 };
 const TITLES = ['Artnet', 'Bluetooth', 'Lumen radio'];
 const TOP_LAYER = ['BarBattery', 'BatteryHead', 'TempLabel', 'BoltImage', 'RadioImage', 'BoostImage'];   // lv_layer_top() in setup()
 const LONG_MS = 1000;            // LONG_IKEY_DELAY (20) x 50 ms
@@ -616,6 +616,29 @@ export class Simulator {
           if (i === 0) { fx.phase = (fx.phase || 0) + (0.002 + speed * 0.058) / 2; if (fx.phase > 2 * Math.PI) fx.phase -= 2 * Math.PI; }
           const wave = 0.5 + 0.5 * Math.sin(fx.phase || 0);
           out.push(this.localRgb(clamp(P.master_intensity * wave, 0, 1) * I)); break;
+        }
+        case EFFECT.LIGHTNING: {   // effect_lightning.ino
+          if (i === 0) {
+            const ls = (fx.ls ??= { inStrike: false, on: false, left: 0, next: 0, off: 0, tau: 40, k: 7500, peak: [0, 0, 0, 0], level: [0, 0, 0, 0] });
+            if (now >= ls.next) {
+              if (!ls.inStrike) {
+                ls.inStrike = true; ls.left = random(2, 6); ls.k = random(6500, 9500);
+                if (random(0, 100) < 35) {
+                  ls.peak = [0, 0, 0, 0];
+                  const p = random(0, PIXELS), pk = random(20, 51) / 100;
+                  ls.peak[p] = pk; if (random(0, 2) && p + 1 < PIXELS) ls.peak[p + 1] = pk * 0.7;
+                } else ls.peak = ls.peak.map(() => random(70, 101) / 100);
+              }
+              if (!ls.on) { ls.on = true; ls.level = ls.peak.map((pk) => pk * random(55, 101) / 100); ls.left--; ls.next = now + random(30, 90); }
+              else {
+                ls.on = false; ls.off = now;
+                if (ls.left > 0) { ls.tau = random(20, 60); ls.next = now + random(30, 160); }
+                else { ls.inStrike = false; ls.tau = random(120, 400); const mn = Math.trunc(300 + 6000 * (1 - speed) ** 2); ls.next = now + random(mn, mn * 2); }
+              }
+            }
+            fx.fade = ls.on ? 1 : Math.exp(-(now - ls.off) / ls.tau);
+          }
+          out.push(kel(fx.ls.level[i] * fx.fade * I, fx.ls.k)); break;
         }
         default: out.push([0, 0, 0]);
       }

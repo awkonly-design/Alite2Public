@@ -110,7 +110,7 @@ lv_label_set_text(ui_EffectLabel,"EFFECTS");
 lv_obj_add_flag( ui_EffectLabel, LV_OBJ_FLAG_HIDDEN );   /// Flags
 
 ui_EffectRoller = lv_roller_create(ui_ScreenEffect);
-lv_roller_set_options( ui_EffectRoller, "Fire\nCandle\nFirework\nFlicker\nAccident\nEmergency\nWelding\nTV\nPulse", LV_ROLLER_MODE_NORMAL );
+lv_roller_set_options( ui_EffectRoller, "Fire\nCandle\nFirework\nFlicker\nAccident\nEmergency\nWelding\nTV\nPulse\nLightning", LV_ROLLER_MODE_NORMAL );
 lv_obj_set_width( ui_EffectRoller, lv_pct(80));
 lv_obj_set_height( ui_EffectRoller, lv_pct(40));
 lv_obj_set_x( ui_EffectRoller, 0 );

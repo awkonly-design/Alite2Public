@@ -45,7 +45,7 @@ const lang_item_t string_table[] = {
     { &ui_EffectPage2, "조도", "調光" },
     { &ui_EffectPage3, "속도", "スピード" },
     { &ui_EffectLabel, "이펙트", "エフェクト" },
-    { &ui_EffectRoller, "모닥불\n캔들\n불꽃놀이\n플리커\n사고\n비상\n용접\nTV\n펄스", "たき火\nキャンドル\n花火大会\nフリッカー\n警察サイレン\n緊急\n溶接\nTV\nパルス" },
+    { &ui_EffectRoller, "모닥불\n캔들\n불꽃놀이\n플리커\n사고\n비상\n용접\nTV\n펄스\n번개", "たき火\nキャンドル\n花火大会\nフリッカー\n警察サイレン\n緊急\n溶接\nTV\nパルス\nライトニング" },
     //{ ui_EffectDimLabel, "50%", "50%" },
     //{ ui_EffectSpeedLabel, "50%", "50%" },
 

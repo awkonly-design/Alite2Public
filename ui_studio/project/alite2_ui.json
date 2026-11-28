@@ -13817,7 +13817,7 @@
               {
                 "nid": -83307752,
                 "strtype": "ROLLER/Options",
-                "strval": "Fire\\nCandle\\nFirework\\nFlicker\\nAccident\\nEmergency\\nWelding\\nTV\\nPulse",
+                "strval": "Fire\\nCandle\\nFirework\\nFlicker\\nAccident\\nEmergency\\nWelding\\nTV\\nPulse\\nLightning",
                 "InheritedType": 10
               },
               {
@@ -19834,7 +19834,7 @@
   },
   "animations": [],
   "selected_theme": "Default",
-  "selected_screen": "GUID2743246-228024S3404197",
+  "selected_screen": "GUID1553635-749230S3934147",
   "info": {
     "name": "Alite2",
     "Name": "Alite2",

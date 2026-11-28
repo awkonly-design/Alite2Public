@@ -10,7 +10,7 @@
 #include "config.h"
 #include <Alite2Link.h>   // BLE / WiFi / OTA link layer (precompiled): wireless modes, BLE identity
 
-#define FIRMWARE_VERSION      "1.2.7"
+#define FIRMWARE_VERSION      "1.2.8"
 
 //#define USE_USB_DEBUG
 //#define USE_WEB_FILESYSTEM      // WARNING: web file manager on port 80 without any password (anyone on the network can read / replace files)
@@ -336,6 +336,7 @@ enum
     EFFECT_WELDING,
     EFFECT_TV,
     EFFECT_PULSE,
+    EFFECT_LIGHTNING,
 };
 
 enum
